@@ -1,0 +1,12 @@
+.btn {
+    color: white;
+    background-color: RoyalBlue;
+    transition: background-color 0.3s ease;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+.btn:hover {
+    background-color: #303f9f;
+}
