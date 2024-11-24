@@ -2,22 +2,23 @@ import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import styles from "./App.module.css";
 
-import { fetchImages } from "./components/Unsplash/unsplash";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-import ImageGallery from "./components/ImageGallery/ImageGallery";
-import ImageModal from "./components/ImageModal/ImageModal";
-import Loader from "./components/Loader/Loader";
-import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import SearchBar from "./components/SearchBar/SearchBar";
+import { fetchImages } from "../Unsplash/unsplash";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import ImageModal from "../ImageModal/ImageModal";
+import Loader from "../Loader/Loader";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+import SearchBar from "../SearchBar/SearchBar";
+import { Image } from "../types";
 
-function App() {
-  const [images, setImages] = useState([]);
+const App: React.FC = () => {
+  const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -30,8 +31,8 @@ function App() {
         const data = await fetchImages(query, page);
         setImages((prevImages) => [...prevImages, ...data.results]);
         setTotalPages(data.total_pages);
-      } catch (error) {
-        setError(error);
+      } catch (err) {
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -40,7 +41,7 @@ function App() {
     getImages();
   }, [query, page]);
 
-  const handleSearch = (searchQuery) => {
+  const handleSearch = (searchQuery: string) => {
     if (!searchQuery.trim()) {
       toast.error("Please enter a search query!");
       return;
@@ -56,7 +57,7 @@ function App() {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const openModal = (image) => {
+  const openModal = (image: Image) => {
     setSelectedImage(image);
     setIsModalOpen(true);
     document.body.style.overflow = "hidden";
@@ -72,14 +73,7 @@ function App() {
     <div className={styles.container}>
       <Toaster />
       <SearchBar onSubmit={handleSearch} />
-
-      <ImageGallery
-        img={images}
-        openModal={openModal}
-        page={page}
-        totalPages={totalPages}
-        onNextPage={handleNextPage}
-      />
+      <ImageGallery img={images} openModal={openModal} />
       {page < totalPages && !loading && !error && (
         <LoadMoreBtn onClick={handleNextPage} />
       )}
@@ -94,6 +88,7 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;
+
