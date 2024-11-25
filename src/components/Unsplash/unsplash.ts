@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FetchImagesResponse } from "../types";
+import { FetchImagesResponse } from "../App/App.types";
 
 const ACCESS_KEY = "W6HczhHDyYJ-vhLtF4ezxvF5jSeAqy1SP7ykf5F-q8A";
 const BASE_URL = "https://api.unsplash.com/search/photos";

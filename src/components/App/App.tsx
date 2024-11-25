@@ -9,7 +9,7 @@ import ImageModal from "../ImageModal/ImageModal";
 import Loader from "../Loader/Loader";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import SearchBar from "../SearchBar/SearchBar";
-import { Image } from "../types";
+import { Image } from "../App/App.types";
 
 const App: React.FC = () => {
   const [images, setImages] = useState<Image[]>([]);

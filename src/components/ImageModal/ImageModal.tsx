@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import styles from "./ImageModal.module.css";
-import { Image } from "../types";
+import { Image } from "../App/App.types";
 
 interface ImageModalProps {
   isOpen: boolean;
